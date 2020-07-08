@@ -1,0 +1,412 @@
+<?xml version='1.0' encoding='ISO-8859-1'?>
+  
+<!--
+   values: reward
+   states: 8
+   actions: 4
+   observations: 2
+  -->
+
+<pomdpx version='0.1' id='4experts' xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance' xsi:noNamespaceSchemaLocation='pomdpx.xsd'>
+  
+  <Description>This is a handmade POMDPX file (by Olivier Buffet,
+    after a POMDP file by Iadine Chadès)</Description>
+  <Discount>0.900000</Discount>
+
+  <Variable>
+
+    <StateVar vnamePrev="state_0" vnameCurr="state_1" fullyObs="true">
+      <ValueEnum>Low High</ValueEnum>
+    </StateVar>
+    
+    <StateVar vnamePrev="model_0" vnameCurr="model_1" fullyObs="false">
+      <ValueEnum>M1 M2 M3 M4</ValueEnum>
+    </StateVar>
+    
+    <ActionVar vname="action_agent">
+      <ValueEnum>DN FG C N</ValueEnum>
+    </ActionVar>
+    
+    <RewardVar vname="reward_agent"/>
+  </Variable>
+  
+  <InitialStateBelief>
+    <CondProb>
+      <Var>state_0</Var>
+      <Parent>null</Parent>
+      <Parameter type = "TBL">
+	<Entry>
+	  <Instance> - </Instance>
+	  <ProbTable>1 0</ProbTable>
+	</Entry>
+      </Parameter>
+    </CondProb>
+    <CondProb>
+      <Var>model_0</Var>
+      <Parent>null</Parent>
+      <Parameter type = "TBL">
+	<Entry>
+	  <Instance> - </Instance>
+	  <ProbTable>uniform</ProbTable>
+	</Entry>
+      </Parameter>
+    </CondProb>
+  </InitialStateBelief>
+  
+
+  <StateTransitionFunction>
+    <CondProb>
+      <Var>state_1</Var>
+      <Parent>action_agent state_0 model_0</Parent>
+      <Parameter type = "TBL">
+
+	<!-- model M1 -->
+	<!-- action DN -->
+	<Entry>
+	  <Instance>DN Low M1 Low</Instance>
+	  <ProbTable>0.99</ProbTable>
+	</Entry>
+	<Entry>
+	  <Instance>DN Low M1 High</Instance>
+	  <ProbTable>0.01</ProbTable>
+	</Entry>
+	<Entry>
+	  <Instance>DN High M1 Low</Instance>
+	  <ProbTable>0.5</ProbTable>
+	</Entry>
+	<Entry>
+	  <Instance>DN High M1 High</Instance>
+	  <ProbTable>0.5</ProbTable>
+	</Entry>
+
+	<!-- action FG -->
+	<Entry>
+	  <Instance>FG Low M1 Low</Instance>
+	  <ProbTable>0.9</ProbTable>
+	</Entry>
+	<Entry>
+	  <Instance>FG Low M1 High</Instance>
+	  <ProbTable>0.1</ProbTable>
+	</Entry>
+	<Entry>
+	  <Instance>FG High M1 Low</Instance>
+	  <ProbTable>0.4</ProbTable>
+	</Entry>
+	<Entry>
+	  <Instance>FG High M1 High</Instance>
+	  <ProbTable>0.6</ProbTable>
+	</Entry>
+
+	<!-- action C -->
+	<Entry>
+	  <Instance>C Low M1 Low</Instance>
+	  <ProbTable>0.8</ProbTable>
+	</Entry>
+	<Entry>
+	  <Instance>C Low M1 High</Instance>
+	  <ProbTable>0.2</ProbTable>
+	</Entry>
+	<Entry>
+	  <Instance>C High M1 Low</Instance>
+	  <ProbTable>0.5</ProbTable>
+	</Entry>
+	<Entry>
+	  <Instance>C High M1 High</Instance>
+	  <ProbTable>0.5</ProbTable>
+	</Entry>
+
+	<!-- action N -->
+	<Entry>
+	  <Instance>N Low M1 Low</Instance>
+	  <ProbTable>0.655172</ProbTable>
+	</Entry>
+	<Entry>
+	  <Instance>N Low M1 High</Instance>
+	  <ProbTable>0.344828</ProbTable>
+	</Entry>
+	<Entry>
+	  <Instance>N High M1 Low</Instance>
+	  <ProbTable>0.5</ProbTable>
+	</Entry>
+	<Entry>
+	  <Instance>N High M1 High</Instance>
+	  <ProbTable>0.5</ProbTable>
+	</Entry>
+
+	<!-- model M2 -->
+	<!-- action DN -->
+	<Entry>
+	  <Instance>DN Low M2 Low</Instance>
+	  <ProbTable>0.2</ProbTable>
+	</Entry>
+	<Entry>
+	  <Instance>DN Low M2 High</Instance>
+	  <ProbTable>0.8</ProbTable>
+	</Entry>
+	<Entry>
+	  <Instance>DN High M2 Low</Instance>
+	  <ProbTable>0.05</ProbTable>
+	</Entry>
+	<Entry>
+	  <Instance>DN High M2 High</Instance>
+	  <ProbTable>0.95</ProbTable>
+	</Entry>
+
+	<!-- action FG -->
+	<Entry>
+	  <Instance>FG Low M2 Low</Instance>
+	  <ProbTable>0.55</ProbTable>
+	</Entry>
+	<Entry>
+	  <Instance>FG Low M2 High</Instance>
+	  <ProbTable>0.45</ProbTable>
+	</Entry>
+	<Entry>
+	  <Instance>FG High M2 Low</Instance>
+	  <ProbTable>0.3</ProbTable>
+	</Entry>
+	<Entry>
+	  <Instance>FG High M2 High</Instance>
+	  <ProbTable>0.7</ProbTable>
+	</Entry>
+
+	<!-- action C -->
+	<Entry>
+	  <Instance>C Low M2 Low</Instance>
+	  <ProbTable>0.7</ProbTable>
+	</Entry>
+	<Entry>
+	  <Instance>C Low M2 High</Instance>
+	  <ProbTable>0.3</ProbTable>
+	</Entry>
+	<Entry>
+	  <Instance>C High M2 Low</Instance>
+	  <ProbTable>0.6</ProbTable>
+	</Entry>
+	<Entry>
+	  <Instance>C High M2 High</Instance>
+	  <ProbTable>0.4</ProbTable>
+	</Entry>
+
+	<!-- action N -->
+	<Entry>
+	  <Instance>N Low M2 Low</Instance>
+	  <ProbTable>0.3</ProbTable>
+	</Entry>
+	<Entry>
+	  <Instance>N Low M2 High</Instance>
+	  <ProbTable>0.7</ProbTable>
+	</Entry>
+	<Entry>
+	  <Instance>N High M2 Low</Instance>
+	  <ProbTable>0.1</ProbTable>
+	</Entry>
+	<Entry>
+	  <Instance>N High M2 High</Instance>
+	  <ProbTable>0.9</ProbTable>
+	</Entry>
+
+	<!-- model M3 -->
+	<!-- action DN -->
+	<Entry>
+	  <Instance>DN Low M3 Low</Instance>
+	  <ProbTable>0.4</ProbTable>
+	</Entry>
+	<Entry>
+	  <Instance>DN Low M3 High</Instance>
+	  <ProbTable>0.6</ProbTable>
+	</Entry>
+	<Entry>
+	  <Instance>DN High M3 Low</Instance>
+	  <ProbTable>0.4</ProbTable>
+	</Entry>
+	<Entry>
+	  <Instance>DN High M3 High</Instance>
+	  <ProbTable>0.6</ProbTable>
+	</Entry>
+
+	<!-- action FG -->
+	<Entry>
+	  <Instance>FG Low M3 Low</Instance>
+	  <ProbTable>0.2</ProbTable>
+	</Entry>
+	<Entry>
+	  <Instance>FG Low M3 High</Instance>
+	  <ProbTable>0.8</ProbTable>
+	</Entry>
+	<Entry>
+	  <Instance>FG High M3 Low</Instance>
+	  <ProbTable>0.1</ProbTable>
+	</Entry>
+	<Entry>
+	  <Instance>FG High M3 High</Instance>
+	  <ProbTable>0.9</ProbTable>
+	</Entry>
+
+	<!-- action C -->
+	<Entry>
+	  <Instance>C Low M3 Low</Instance>
+	  <ProbTable>0.7</ProbTable>
+	</Entry>
+	<Entry>
+	  <Instance>C Low M3 High</Instance>
+	  <ProbTable>0.3</ProbTable>
+	</Entry>
+	<Entry>
+	  <Instance>C High M3 Low</Instance>
+	  <ProbTable>0.3</ProbTable>
+	</Entry>
+	<Entry>
+	  <Instance>C High M3 High</Instance>
+	  <ProbTable>0.7</ProbTable>
+	</Entry>
+
+	<!-- action N -->
+	<Entry>
+	  <Instance>N Low M3 Low</Instance>
+	  <ProbTable>0.5</ProbTable>
+	</Entry>
+	<Entry>
+	  <Instance>N Low M3 High</Instance>
+	  <ProbTable>0.5</ProbTable>
+	</Entry>
+	<Entry>
+	  <Instance>N High M3 Low</Instance>
+	  <ProbTable>0.3</ProbTable>
+	</Entry>
+	<Entry>
+	  <Instance>N High M3 High</Instance>
+	  <ProbTable>0.7</ProbTable>
+	</Entry>
+
+	<!-- model M4 -->
+	<!-- action DN -->
+	<Entry>
+	  <Instance>DN Low M4 Low</Instance>
+	  <ProbTable>0.6</ProbTable>
+	</Entry>
+	<Entry>
+	  <Instance>DN Low M4 High</Instance>
+	  <ProbTable>0.4</ProbTable>
+	</Entry>
+	<Entry>
+	  <Instance>DN High M4 Low</Instance>
+	  <ProbTable>0.4</ProbTable>
+	</Entry>
+	<Entry>
+	  <Instance>DN High M4 High</Instance>
+	  <ProbTable>0.6</ProbTable>
+	</Entry>
+
+	<!-- action FG -->
+	<Entry>
+	  <Instance>FG Low M4 Low</Instance>
+	  <ProbTable>0.4</ProbTable>
+	</Entry>
+	<Entry>
+	  <Instance>FG Low M4 High</Instance>
+	  <ProbTable>0.6</ProbTable>
+	</Entry>
+	<Entry>
+	  <Instance>FG High M4 Low</Instance>
+	  <ProbTable>0.25</ProbTable>
+	</Entry>
+	<Entry>
+	  <Instance>FG High M4 High</Instance>
+	  <ProbTable>0.75</ProbTable>
+	</Entry>
+
+	<!-- action C -->
+	<Entry>
+	  <Instance>C Low M4 Low</Instance>
+	  <ProbTable>0.5</ProbTable>
+	</Entry>
+	<Entry>
+	  <Instance>C Low M4 High</Instance>
+	  <ProbTable>0.5</ProbTable>
+	</Entry>
+	<Entry>
+	  <Instance>C High M4 Low</Instance>
+	  <ProbTable>0.2</ProbTable>
+	</Entry>
+	<Entry>
+	  <Instance>C High M4 High</Instance>
+	  <ProbTable>0.8</ProbTable>
+	</Entry>
+
+	<!-- action N -->
+	<Entry>
+	  <Instance>N Low M4 Low</Instance>
+	  <ProbTable>0.85</ProbTable>
+	</Entry>
+	<Entry>
+	  <Instance>N Low M4 High</Instance>
+	  <ProbTable>0.15</ProbTable>
+	</Entry>
+	<Entry>
+	  <Instance>N High M4 Low</Instance>
+	  <ProbTable>0.4</ProbTable>
+	</Entry>
+	<Entry>
+	  <Instance>N High M4 High</Instance>
+	  <ProbTable>0.6</ProbTable>
+	</Entry>
+
+      </Parameter>
+    </CondProb>
+    
+    <CondProb>
+      <Var>model_1</Var>
+      <Parent>model_0</Parent>
+      <Parameter type = "TBL">
+	<Entry>
+	  <Instance> - - </Instance>
+	  <ProbTable>identity</ProbTable>
+	</Entry>
+      </Parameter>
+    </CondProb>
+  </StateTransitionFunction>
+  
+  <ObsFunction>
+    <!--CondProb>
+      <Var>obs_sensor</Var>
+      <Parent>action_agent state_1</Parent>
+      <Parameter type = "TBL">
+	<Entry>
+	  <Instance>listen - -</Instance>
+	  <ProbTable>0.85 0.15 0.15 0.85</ProbTable></Entry>
+	<Entry>
+	  <Instance>open-left * *</Instance>
+	  <ProbTable>0.5</ProbTable></Entry>
+	<Entry>
+	  <Instance>open-right * *</Instance>
+	  <ProbTable>0.5</ProbTable></Entry>
+      </Parameter>
+    </CondProb-->
+  </ObsFunction>
+  
+  <RewardFunction>
+    <Func>
+      <Var>reward_agent</Var>
+      <Parent>action_agent state_0</Parent>
+      <Parameter type = "TBL">
+	<Entry>
+	  <Instance>DN -</Instance>
+	  <ValueTable>0 +20</ValueTable>
+	</Entry>
+	<Entry>
+	  <Instance>FG -</Instance>
+	  <ValueTable>-5 +15</ValueTable>
+	</Entry>
+	<Entry>
+	  <Instance>C -</Instance>
+	  <ValueTable>-5 +15</ValueTable>
+	</Entry>
+	<Entry>
+	  <Instance>N -</Instance>
+	  <ValueTable>-5 +15</ValueTable>
+	</Entry>
+      </Parameter>
+    </Func>
+  </RewardFunction>
+</pomdpx>

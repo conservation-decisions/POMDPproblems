@@ -1,0 +1,39 @@
+## Chades et al. 2008 - Sumatran Tiger example
+
+discount: 0.95                             # finite horizon
+values: reward
+states: extinct extant                  # set of states
+actions: protect monitor do-nothing     # set of actions
+observations: absent present            # set of observations    
+
+## Transition probabilities
+T: * 
+1 0
+0.1000000000 0.9000000000
+
+T: protect : extant
+0.0581550791 0.9418449209
+
+## Observation probabilities
+O: *
+1 0
+0.99 0.01
+
+O: monitor : extant
+0.2180653753 0.7819346247
+
+## Reward
+## R: do-nothing : * : extinct : *	0
+## R: do-nothing : * : extant : * 4800000
+## R: monitor : * : extinct : *	-10235
+## R: monitor : * : extant : *   4789765
+## R: protect : * : extinct : *	-18056
+## R: protect : * : extant : *  4781944
+
+## Reward (normalized)
+R: do-nothing : * : extinct : *	0.0037
+R: do-nothing : * : extant : * 1
+R: monitor : * : extinct : *	0.0016
+R: monitor : * : extant : *   0.9979
+R: protect : * : extinct : *	0
+R: protect : * : extant : *  0.9963

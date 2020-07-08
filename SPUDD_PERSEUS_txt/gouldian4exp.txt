@@ -1,0 +1,133 @@
+(variables
+    (Bird Low High)
+    (Expert Exp1 Exp2 Exp3 Exp4)
+)
+
+(observations
+    (Obs oLow oHigh)
+)
+
+init (Bird (Low (Expert (Exp1 (0.25))
+                        (Exp2 (0.25))
+                        (Exp3 (0.25))
+                        (Exp4 (0.25))))
+           (High (0.0)))
+
+unnormalised
+
+action DoNothing
+    Bird (Expert'   (Exp1   (Bird   (Low    (Bird'  (Low    (0.99))
+                                                    (High   (0.01))))
+                                    (High   (Bird'  (Low    (0.5))
+                                                    (High   (0.5))))))
+                    (Exp2  (Bird   (Low    (Bird'  (Low    (0.9))
+                                                    (High   (0.1))))
+                                    (High   (Bird'  (Low    (0.4))
+                                                    (High   (0.6))))))
+                    (Exp3  (Bird  (Low    (Bird'  (Low    (0.8))
+                                                    (High   (0.2))))
+                                    (High   (Bird'  (Low    (0.5))
+                                                    (High   (0.5))))))
+                    (Exp4  (Bird   (Low    (Bird'  (Low    (0.95))
+                                                    (High   (0.5))))
+                                    (High   (Bird'  (Low    (0.5))
+                                                    (High   (0.5)))))))
+    Expert (SAMEExpert)
+
+    observe
+        Obs (Bird' (Low (Obs' (oLow (1.0)) (oHigh (0.0))))
+                   (High (Obs' (oLow (0.0)) (oHigh (1.0)))))
+    endobserve
+
+    cost (Bird (Low (0))
+               (High (0)))          
+endaction
+
+action Fire
+    Bird (Expert'   (Exp1   (Bird   (Low    (Bird'  (Low    (0.2))
+                                                    (High   (0.8))))
+                                    (High   (Bird'  (Low    (0.05))
+                                                    (High   (0.95))))))
+                    (Exp2  (Bird   (Low    (Bird'  (Low    (0.55))
+                                                    (High   (0.45))))
+                                    (High   (Bird'  (Low    (0.3))
+                                                    (High   (0.7))))))
+                    (Exp3  (Bird  (Low    (Bird'  (Low    (0.7))
+                                                    (High   (0.3))))
+                                    (High   (Bird'  (Low    (0.6))
+                                                    (High   (0.4))))))
+                    (Exp4  (Bird   (Low    (Bird'  (Low    (0.3))
+                                                    (High   (0.7))))
+                                    (High   (Bird'  (Low    (0.1))
+                                                    (High   (0.9)))))))
+    Expert (SAMEExpert)
+
+    observe
+        Obs (Bird' (Low (Obs' (oLow (1.0)) (oHigh (0.0))))
+                   (High (Obs' (oLow (0.0)) (oHigh (1.0)))))
+    endobserve
+
+    cost (Bird (Low (5))
+               (High (5)))      
+endaction
+
+action Cats
+    Bird (Expert'   (Exp1   (Bird   (Low    (Bird'  (Low    (0.4))
+                                                    (High   (0.6))))
+                                    (High   (Bird'  (Low    (0.4))
+                                                    (High   (0.6))))))
+                    (Exp2  (Bird   (Low    (Bird'  (Low    (0.2))
+                                                    (High   (0.8))))
+                                    (High   (Bird'  (Low    (0.1))
+                                                    (High   (0.9))))))
+                    (Exp3  (Bird  (Low    (Bird'  (Low    (0.7))
+                                                    (High   (0.3))))
+                                    (High   (Bird'  (Low    (0.3))
+                                                    (High   (0.7))))))
+                    (Exp4  (Bird   (Low    (Bird'  (Low    (0.5))
+                                                    (High   (0.5))))
+                                    (High   (Bird'  (Low    (0.3))
+                                                    (High   (0.7)))))))
+    Expert (SAMEExpert)
+
+    observe
+        Obs (Bird' (Low (Obs' (oLow (1.0)) (oHigh (0.0))))
+                   (High (Obs' (oLow (0.0)) (oHigh (1.0)))))
+    endobserve
+
+    cost (Bird (Low (5))
+               (High (5)))      
+endaction
+
+action NestingBox
+    Bird (Expert'   (Exp1   (Bird   (Low    (Bird'  (Low    (0.6))
+                                                    (High   (0.4))))
+                                    (High   (Bird'  (Low    (0.4))
+                                                    (High   (0.6))))))
+                    (Exp2  (Bird   (Low    (Bird'  (Low    (0.4))
+                                                    (High   (0.6))))
+                                    (High   (Bird'  (Low    (0.25))
+                                                    (High   (0.75))))))
+                    (Exp3  (Bird  (Low    (Bird'  (Low    (0.5))
+                                                    (High   (0.5))))
+                                    (High   (Bird'  (Low    (0.2))
+                                                    (High   (0.8))))))
+                    (Exp4  (Bird   (Low    (Bird'  (Low    (0.85))
+                                                    (High   (0.15))))
+                                    (High   (Bird'  (Low    (0.4))
+                                                    (High   (0.6)))))))
+    Expert (SAMEExpert)
+
+    observe
+        Obs (Bird' (Low (Obs' (oLow (1.0)) (oHigh (0.0))))
+                   (High (Obs' (oLow (0.0)) (oHigh (1.0)))))
+    endobserve
+
+    cost (Bird (Low (5))
+               (High (5)))      
+endaction
+reward (Bird (Low (0))
+             (High (20)))
+discount 0.9
+
+tolerance 0.0001
