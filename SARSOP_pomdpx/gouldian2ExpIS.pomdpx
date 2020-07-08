@@ -1,0 +1,980 @@
+<?xml version='1.0' encoding='ISO-8859-1'?>
+ 
+
+<pomdpx version='0.1' id='is' xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance' xsi:noNamespaceSchemaLocation='pomdpx.xsd'>
+
+
+  <Description>
+  // Adaptive management problem: gouldian finch and interacting species
+  // Iadine Chades iadine.chades@csiro.au
+  // Chades, I., Carwardine, J., Martin, T.G., Nicol, S., Sabbadin, R. & Buffet, O. (2012) MOMDPs: a Solution for Modelling Adaptive Management Problems. Twenty-Sixth AAAI Conference on Artificial Intelligence (AAAI-12).
+  // (translated from Perseus format by Olivier Buffet)
+  </Description>
+
+  <Discount>0.9</Discount>
+
+  <!-- tolerance 0.01 -->
+
+<!--
+/// DECLARATION
+(variables
+    (Gouldian 	Low Medium High)
+    (LT 		Low Medium High)  
+    (Dingo		Low Medium High)
+    (Cats		Low Medium High)
+    (Expert 	E1 E2)
+)
+(observations
+    (OGouldian	oLow oMedium oHigh)
+    (OLT		oLow oMedium oHigh)
+    (ODingo		oLow oMedium oHigh)
+    (OCats		oLow oMedium oHigh)
+)
+-->
+
+  <Variable>
+    
+    <StateVar vnamePrev="Gouldian_0" vnameCurr="Gouldian_1" fullyObs="true">
+      <ValueEnum>Low Medium High</ValueEnum>
+    </StateVar>
+
+    <StateVar vnamePrev="LT_0" vnameCurr="LT_1" fullyObs="true">
+      <ValueEnum>Low Medium High</ValueEnum>
+    </StateVar>
+    
+    <StateVar vnamePrev="Dingo_0" vnameCurr="Dingo_1" fullyObs="true">
+      <ValueEnum>Low Medium High</ValueEnum>
+    </StateVar>
+    
+    <StateVar vnamePrev="Cats_0" vnameCurr="Cats_1" fullyObs="true">
+      <ValueEnum>Low Medium High</ValueEnum>
+    </StateVar>
+    
+    <StateVar vnamePrev="Expert_0" vnameCurr="Expert_1" fullyObs="false">
+      <ValueEnum>E1 E2</ValueEnum>
+    </StateVar>
+        
+    <ObsVar vname="oGouldian"><ValueEnum>oLow oMedium oHigh</ValueEnum></ObsVar>
+    <ObsVar vname="oLT"><ValueEnum>oLow oMedium oHigh</ValueEnum></ObsVar>
+    <ObsVar vname="oDingo"><ValueEnum>oLow oMedium oHigh</ValueEnum></ObsVar>
+    <ObsVar vname="oCats"><ValueEnum>oLow oMedium oHigh</ValueEnum></ObsVar>
+    
+    <ActionVar vname="Action">
+      <ValueEnum>DN FG C NB</ValueEnum>
+    </ActionVar>
+    
+    <RewardVar vname="Reward"/>
+  </Variable>
+  
+
+  <!--
+init [* (Gouldian (Low (1.0)) (Medium (0.0)) (High (0.0)))
+        (LT	  (Low (0.0)) (Medium (1.0)) (High (0.0)))
+        (Dingo	  (Low (1.0)) (Medium (0.0)) (High (0.0)))
+        (Cats	  (Low (0.0)) (Medium (1.0)) (High (0.0)))
+	(Expert   (E1 (0.5)) (E2 (0.5)))]
+
+//normalised
+
+    -->
+
+  <InitialStateBelief>
+    <CondProb>
+      <Var>Gouldian_0</Var><Parent>null</Parent>
+      <Parameter type = "TBL"><Entry><Instance> - </Instance><ProbTable>1 0 0</ProbTable></Entry></Parameter>
+    </CondProb>
+    <CondProb>
+      <Var>LT_0</Var><Parent>null</Parent>
+      <Parameter type = "TBL"><Entry><Instance> - </Instance><ProbTable>0 1 0</ProbTable></Entry></Parameter>
+    </CondProb>
+    <CondProb>
+      <Var>Dingo_0</Var><Parent>null</Parent>
+      <Parameter type = "TBL"><Entry><Instance> - </Instance><ProbTable>1 0 0</ProbTable></Entry></Parameter>
+    </CondProb>
+    <CondProb>
+      <Var>Cats_0</Var><Parent>null</Parent>
+      <Parameter type = "TBL"><Entry><Instance> - </Instance><ProbTable>0 1 0</ProbTable></Entry></Parameter>
+    </CondProb>
+    <CondProb>
+      <Var>Expert_0</Var><Parent>null</Parent>
+      <Parameter type = "TBL"><Entry><Instance> - </Instance><ProbTable>0.5 0.5</ProbTable></Entry></Parameter>
+    </CondProb>
+  </InitialStateBelief>
+
+  <StateTransitionFunction>
+    <CondProb>
+      <!-- Dingo -->
+      <Var>Dingo_1</Var><Parent>Action Expert_0 Dingo_0</Parent>
+      <Parameter type = "TBL">
+	<!-- Do Nothing -->
+	<Entry>
+	  <Instance>DN E1 - - </Instance>
+	  <ProbTable>
+	    0.98 0.02 0.0
+	    0.6  0.38 0.02
+	    0.0  0.6  0.4
+	  </ProbTable>
+	</Entry>
+	<Entry>
+	  <Instance>DN E2 - - </Instance>
+	  <ProbTable>
+	    1.0  0.0  0.0
+	    0.6  0.4  0.0
+	    0.0  0.6  0.4
+	  </ProbTable>
+	</Entry>
+	<!-- Fire Grazing -->
+	<Entry>
+	  <Instance>FG E1 - - </Instance>
+	  <ProbTable>
+	    0.9  0.1  0.0
+	    0.05 0.85 0.1
+	    0.0  0.05 0.95
+	  </ProbTable>
+	</Entry>
+	<Entry>
+	  <Instance>FG E2 - - </Instance><!-- same as DN E2 -->
+	  <ProbTable>
+	    1.0  0.0  0.0
+	    0.6  0.4  0.0
+	    0.0  0.6  0.4
+	  </ProbTable>
+	</Entry>
+	<!-- Cats -->
+	<Entry>
+	  <Instance>C E1 - - </Instance>
+	  <ProbTable>
+	    0.22 0.78 0.0
+	    0.02 0.2  0.78
+	    0.0  0.02 0.98
+	  </ProbTable>
+	</Entry>
+	<Entry>
+	  <Instance>C E2 - - </Instance>
+	  <ProbTable>
+	    0.25 0.75 0.0
+	    0.0  0.25 0.75
+	    0.0  0.0  1.0
+	  </ProbTable>
+	</Entry>
+	<!-- NB --><!-- =DN -->
+	<Entry>
+	  <Instance>NB E1 - - </Instance>
+	  <ProbTable>
+	    0.98 0.02 0.0
+	    0.6  0.38 0.02
+	    0.0  0.6  0.4
+	  </ProbTable>
+	</Entry>
+	<Entry>
+	  <Instance>NB E2 - - </Instance>
+	  <ProbTable>
+	    1.0  0.0  0.0
+	    0.6  0.4  0.0
+	    0.0  0.6  0.4
+	  </ProbTable>
+	</Entry>
+      </Parameter>
+    </CondProb>
+    <CondProb>
+      <!-- Cats -->
+      <Var>Cats_1</Var><Parent>Action Expert_0 Dingo_0 Cats_0</Parent>
+      <Parameter type = "TBL">
+	<!-- Do Nothing -->
+	<Entry>
+	  <Instance>DN E1 Low - - </Instance>
+	  <ProbTable>
+	    0.05 0.95 0.0
+	    0.0  0.05 0.95
+	    0.0  0.0  1.0
+	  </ProbTable>
+	</Entry>
+	<Entry>
+	  <Instance>DN E1 Medium - - </Instance>
+	  <ProbTable>
+	    0.05 0.95 0.0
+	    0.88 0.1  0.02
+	    0.0  0.88 0.12
+	  </ProbTable>
+	</Entry>
+	<Entry>
+	  <Instance>DN E1 High - - </Instance><!-- same as Medium -->
+	  <ProbTable>
+	    0.05 0.95 0.0
+	    0.88 0.1  0.02
+	    0.0  0.88 0.12
+	  </ProbTable>
+	</Entry>
+	<Entry>
+	  <Instance>DN E2 Low - - </Instance>
+	  <ProbTable>
+	    0.35 0.65 0.0
+	    0.0  0.35 0.65
+	    0.0  0.0  1.0
+	  </ProbTable>
+	</Entry>
+	<Entry>
+	  <Instance>DN E2 Medium - - </Instance>
+	  <ProbTable>
+	    0.35 0.65 0.0
+	    0.7  0.3  0.0
+	    0.0  0.7  0.3
+	  </ProbTable>
+	</Entry>
+	<Entry>
+	  <Instance>DN E2 High - - </Instance><!-- same as Medium -->
+	  <ProbTable>
+	    0.35 0.65 0.0
+	    0.7  0.3  0.0
+	    0.0  0.7  0.3
+	  </ProbTable>
+	</Entry>
+	<!-- Fire Grazing -->
+	<Entry>
+	  <Instance>FG E1 Low - - </Instance>
+	  <ProbTable>
+	    0.95 0.05 0.0
+	    0.2  0.75 0.05
+	    0.0  0.2  0.8
+	  </ProbTable>
+	</Entry>
+	<Entry>
+	  <Instance>FG E1 Medium - - </Instance>
+	  <ProbTable>
+	    0.95 0.05 0.0
+	    0.88 0.1  0.02
+	    0.0  0.88 0.12
+	  </ProbTable>
+	</Entry>
+	<Entry>
+	  <Instance>FG E1 High - - </Instance><!-- same as Medium -->
+	  <ProbTable>
+	    0.95 0.05 0.0
+	    0.88 0.1  0.02
+	    0.0  0.88 0.12
+	  </ProbTable>
+	</Entry>
+	<Entry>
+	  <Instance>FG E2 Low - - </Instance>
+	  <ProbTable>
+	    0.85 0.15 0.0
+	    0.2  0.65 0.15
+	    0.0  0.2  0.8
+	  </ProbTable>
+	</Entry>
+	<Entry>
+	  <Instance>FG E2 Medium - - </Instance>
+	  <ProbTable>
+	    0.85 0.15 0.0
+	    0.7  0.3  0.0
+	    0.0  0.7  0.3
+	  </ProbTable>
+	</Entry>
+	<Entry>
+	  <Instance>FG E2 High - - </Instance><!-- same as Medium -->
+	  <ProbTable>
+	    0.85 0.15 0.0
+	    0.7  0.3  0.0
+	    0.0  0.7  0.3
+	  </ProbTable>
+	</Entry>
+	<!-- Cats -->
+	<Entry>
+	  <Instance>C E1 Low - - </Instance>
+	  <ProbTable>
+	    0.05 0.95 0.0
+	    0.0  0.05 0.95
+	    0.0  0.0  1.0
+	  </ProbTable>
+	</Entry>
+	<Entry>
+	  <Instance>C E1 Medium - - </Instance>
+	  <ProbTable>
+	    0.05 0.95 0.0
+	    0.88 0.1  0.02
+	    0.0  0.88 0.12
+	  </ProbTable>
+	</Entry>
+	<Entry>
+	  <Instance>C E1 High - - </Instance><!-- same as Medium -->
+	  <ProbTable>
+	    0.05 0.95 0.0
+	    0.88 0.1  0.02
+	    0.0  0.88 0.12
+	  </ProbTable>
+	</Entry>
+	<Entry>
+	  <Instance>C E2 Low - - </Instance>
+	  <ProbTable>
+	    0.35 0.65 0.0
+	    0.0  0.35 0.65
+	    0.0  0.0  1.0
+	  </ProbTable>
+	</Entry>
+	<Entry>
+	  <Instance>C E2 Medium - - </Instance>
+	  <ProbTable>
+	    0.35 0.65 0.0
+	    0.7  0.3  0.0
+	    0.0  0.7  0.3
+	  </ProbTable>
+	</Entry>
+	<Entry>
+	  <Instance>C E2 High - - </Instance><!-- same as Medium -->
+	  <ProbTable>
+	    0.35 0.65 0.0
+	    0.7  0.3  0.0
+	    0.0  0.7  0.3
+	  </ProbTable>
+	</Entry>
+	<!-- NB --><!-- =DN -->
+	<Entry>
+	  <Instance>NB E1 Low - - </Instance>
+	  <ProbTable>
+	    0.05 0.95 0.0
+	    0.0  0.05 0.95
+	    0.0  0.0  1.0
+	  </ProbTable>
+	</Entry>
+	<Entry>
+	  <Instance>NB E1 Medium - - </Instance>
+	  <ProbTable>
+	    0.05 0.95 0.0
+	    0.88 0.1  0.02
+	    0.0  0.88 0.12
+	  </ProbTable>
+	</Entry>
+	<Entry>
+	  <Instance>NB E1 High - - </Instance><!-- same as Medium -->
+	  <ProbTable>
+	    0.05 0.95 0.0
+	    0.88 0.1  0.02
+	    0.0  0.88 0.12
+	  </ProbTable>
+	</Entry>
+	<Entry>
+	  <Instance>NB E2 Low - - </Instance>
+	  <ProbTable>
+	    0.35 0.65 0.0
+	    0.0  0.35 0.65
+	    0.0  0.0  1.0
+	  </ProbTable>
+	</Entry>
+	<Entry>
+	  <Instance>NB E2 Medium - - </Instance>
+	  <ProbTable>
+	    0.35 0.65 0.0
+	    0.7  0.3  0.0
+	    0.0  0.7  0.3
+	  </ProbTable>
+	</Entry>
+	<Entry>
+	  <Instance>NB E2 High - - </Instance><!-- same as Medium -->
+	  <ProbTable>
+	    0.35 0.65 0.0
+	    0.7  0.3  0.0
+	    0.0  0.7  0.3
+	  </ProbTable>
+	</Entry>
+      </Parameter>
+    </CondProb>
+    <CondProb>
+      <!-- LT -->
+      <Var>LT_1</Var><Parent>Action Expert_0 Cats_0 LT_0</Parent>
+      <Parameter type = "TBL">
+	<!-- Do Nothing -->
+	<Entry>
+	  <Instance>DN E1 Low - - </Instance><!-- NoPredLTTM -->
+	  <ProbTable>
+	    0.4  0.6  0.0
+	    0.0  0.4  0.6
+	    0.0  0.0  1.0
+	  </ProbTable>
+	</Entry>
+	<Entry>
+	  <Instance>DN E1 Medium - - </Instance><!-- PredLTTM -->
+	  <ProbTable>
+	    0.975 0.025 0.0
+	    0.075 0.9 0.025
+	    0.0 0.075 0.925
+	  </ProbTable>
+	</Entry>
+	<Entry>
+	  <Instance>DN E1 High - - </Instance><!-- PredLTTM -->
+	  <ProbTable>
+	    0.975 0.025 0.0
+	    0.075 0.9 0.025
+	    0.0 0.075 0.925
+	  </ProbTable>
+	</Entry>
+	<Entry>
+	  <Instance>DN E2 Low - - </Instance><!-- NoPredLT -->
+	  <ProbTable>
+	    0.35 0.65 0.0
+	    0.0  0.35 0.65
+	    0.0  0.0  1.0
+	  </ProbTable>
+	</Entry>
+	<Entry>
+	  <Instance>DN E2 Medium - - </Instance><!-- PredLT -->
+	  <ProbTable>
+	    0.95 0.05 0.0
+	    0.5  0.45 0.05
+	    0.0  0.5  0.5
+	  </ProbTable>
+	</Entry>
+	<Entry>
+	  <Instance>DN E2 High - - </Instance><!-- PredLT -->
+	  <ProbTable>
+	    0.95 0.05 0.0
+	    0.5  0.45 0.05
+	    0.0  0.5  0.5
+	  </ProbTable>
+	</Entry>
+	<!-- Fire Grazing -->
+	<Entry>
+	  <Instance>FG E1 * - - </Instance><!-- FGLTTM -->
+	  <ProbTable>
+	    0.2  0.8  0.0
+	    0.05 0.15 0.8
+	    0.0  0.05 0.95
+	  </ProbTable>
+	</Entry>
+	<Entry>
+	  <Instance>FG E2 Low - - </Instance><!-- NoPredLT -->
+	  <ProbTable>
+	    0.35 0.65 0.0
+	    0.0  0.35 0.65
+	    0.0  0.0  1.0
+	  </ProbTable>
+	</Entry>
+	<Entry>
+	  <Instance>FG E2 Medium - - </Instance><!-- PredLTFG -->
+	  <ProbTable>
+	    0.5  0.5  0.0
+	    0.2  0.3  0.5
+	    0.0  0.2  0.8
+	  </ProbTable>
+	</Entry>
+	<Entry>
+	  <Instance>FG E2 High - - </Instance><!-- PredLTFG -->
+	  <ProbTable>
+	    0.5  0.5  0.0
+	    0.2  0.3  0.5
+	    0.0  0.2  0.8
+	  </ProbTable>
+	</Entry>
+	<!-- Cats -->
+	<Entry>
+	  <Instance>C E1 Low - - </Instance><!-- NoPredLTTM -->
+	  <ProbTable>
+	    0.4  0.6  0.0
+	    0.0  0.4  0.6
+	    0.0  0.0  1.0
+	  </ProbTable>
+	</Entry>
+	<Entry>
+	  <Instance>C E1 Medium - - </Instance><!-- PredLTTM -->
+	  <ProbTable>
+	    0.975 0.025 0.0
+	    0.075 0.9 0.025
+	    0.0 0.075 0.925
+	  </ProbTable>
+	</Entry>
+	<Entry>
+	  <Instance>C E1 High - - </Instance><!-- PredLTTM -->
+	  <ProbTable>
+	    0.975 0.025 0.0
+	    0.075 0.9 0.025
+	    0.0 0.075 0.925
+	  </ProbTable>
+	</Entry>
+	<Entry>
+	  <Instance>C E2 Low - - </Instance><!-- NoPredLT -->
+	  <ProbTable>
+	    0.35 0.65 0.0
+	    0.0  0.35 0.65
+	    0.0  0.0  1.0
+	  </ProbTable>
+	</Entry>
+	<Entry>
+	  <Instance>C E2 Medium - - </Instance><!-- PredLT -->
+	  <ProbTable>
+	    0.95 0.05 0.0
+	    0.5  0.45 0.05
+	    0.0  0.5  0.5
+	  </ProbTable>
+	</Entry>
+	<Entry>
+	  <Instance>C E2 High - - </Instance><!-- PredLT -->
+	  <ProbTable>
+	    0.95 0.05 0.0
+	    0.5  0.45 0.05
+	    0.0  0.5  0.5
+	  </ProbTable>
+	</Entry>
+	<!-- NB -->
+	<Entry>
+	  <Instance>NB E1 Low - - </Instance><!-- NoPredLTTM -->
+	  <ProbTable>
+	    0.4  0.6  0.0
+	    0.0  0.4  0.6
+	    0.0  0.0  1.0
+	  </ProbTable>
+	</Entry>
+	<Entry>
+	  <Instance>NB E1 Medium - - </Instance><!-- PredLTTM -->
+	  <ProbTable>
+	    0.975 0.025 0.0
+	    0.075 0.9 0.025
+	    0.0 0.075 0.925
+	  </ProbTable>
+	</Entry>
+	<Entry>
+	  <Instance>NB E1 High - - </Instance><!-- PredLTTM -->
+	  <ProbTable>
+	    0.975 0.025 0.0
+	    0.075 0.9 0.025
+	    0.0 0.075 0.925
+	  </ProbTable>
+	</Entry>
+	<Entry>
+	  <Instance>NB E2 Low - - </Instance><!-- NoPredLT -->
+	  <ProbTable>
+	    0.35 0.65 0.0
+	    0.0  0.35 0.65
+	    0.0  0.0  1.0
+	  </ProbTable>
+	</Entry>
+	<Entry>
+	  <Instance>NB E2 Medium - - </Instance><!-- PredLT -->
+	  <ProbTable>
+	    0.95 0.05 0.0
+	    0.5  0.45 0.05
+	    0.0  0.5  0.5
+	  </ProbTable>
+	</Entry>
+	<Entry>
+	  <Instance>NB E2 High - - </Instance><!-- PredLT -->
+	  <ProbTable>
+	    0.95 0.05 0.0
+	    0.5  0.45 0.05
+	    0.0  0.5  0.5
+	  </ProbTable>
+	</Entry>
+      </Parameter>
+    </CondProb>
+    <CondProb>
+      <!-- Gouldian -->
+      <Var>Gouldian_1</Var><Parent>Action Expert_0 Cats_0 LT_0 Gouldian_0</Parent>
+      <Parameter type = "TBL">
+	<!-- Do Nothing -->
+	<Entry>
+	  <Instance>DN E1 Low * - - </Instance><!-- NoPredGTM -->
+	  <ProbTable>
+	    0.4  0.6  0.0
+	    0.05 0.35 0.6
+	    0.0  0.05 0.95
+	  </ProbTable>
+	</Entry>
+	<Entry>
+	  <Instance>DN E1 Medium Low - - </Instance><!-- NoCompetGTM -->
+	  <ProbTable>
+	    0.5  0.5  0.0
+	    0.0  0.5  0.5
+	    0.0  0.0  1.0
+	  </ProbTable>
+	</Entry>
+	<Entry>
+	  <Instance>DN E1 Medium Medium - - </Instance><!-- PredCompGTM -->
+	  <ProbTable>
+	    1.0  0.0  0.0
+	    0.9  0.1  0.0
+	    0.0  0.9  0.1
+	  </ProbTable>
+	</Entry>
+	<Entry>
+	  <Instance>DN E1 Medium High - - </Instance><!-- PredCompGTM -->
+	  <ProbTable>
+	    1.0  0.0  0.0
+	    0.9  0.1  0.0
+	    0.0  0.9  0.1
+	  </ProbTable>
+	</Entry>
+	<Entry>
+	  <Instance>DN E1 High Low - - </Instance><!-- NoCompetGTM -->
+	  <ProbTable>
+	    0.5  0.5  0.0
+	    0.0  0.5  0.5
+	    0.0  0.0  1.0
+	  </ProbTable>
+	</Entry>
+	<Entry>
+	  <Instance>DN E1 High Medium - - </Instance><!-- PredCompGTM -->
+	  <ProbTable>
+	    1.0  0.0  0.0
+	    0.9  0.1  0.0
+	    0.0  0.9  0.1
+	  </ProbTable>
+	</Entry>
+	<Entry>
+	  <Instance>DN E1 High High - - </Instance><!-- PredCompGTM -->
+	  <ProbTable>
+	    1.0  0.0  0.0
+	    0.9  0.1  0.0
+	    0.0  0.9  0.1
+	  </ProbTable>
+	</Entry>
+	<Entry>
+	  <Instance>DN E2 Low * - - </Instance><!-- NoPredG -->
+	  <ProbTable>
+	    0.4  0.6  0.0
+	    0.1  0.3  0.6
+	    0.0  0.05 0.95
+	  </ProbTable>
+	</Entry>
+	<Entry>
+	  <Instance>DN E2 Medium Low - - </Instance><!-- NoCompetG -->
+	  <ProbTable>
+	    0.4  0.6  0.0
+	    0.1  0.3  0.6
+	    0.0  0.1  0.9
+	  </ProbTable>
+	</Entry>
+	<Entry>
+	  <Instance>DN E2 Medium Medium - - </Instance><!-- PredCompG -->
+	  <ProbTable>
+	    1.0  0.0  0.0
+	    0.9  0.1  0.0
+	    0.0  0.9  0.1
+	  </ProbTable>
+	</Entry>
+	<Entry>
+	  <Instance>DN E2 Medium High - - </Instance><!-- PredCompG -->
+	  <ProbTable>
+	    1.0  0.0  0.0
+	    0.9  0.1  0.0
+	    0.0  0.9  0.1
+	  </ProbTable>
+	</Entry>
+	<Entry>
+	  <Instance>DN E2 High Low - - </Instance><!-- NoCompetG -->
+	  <ProbTable>
+	    0.4  0.6  0.0
+	    0.1  0.3  0.6
+	    0.0  0.1  0.9
+	  </ProbTable>
+	</Entry>
+	<Entry>
+	  <Instance>DN E2 High Medium - - </Instance><!-- PredCompG -->
+	  <ProbTable>
+	    1.0  0.0  0.0
+	    0.9  0.1  0.0
+	    0.0  0.9  0.1
+	  </ProbTable>
+	</Entry>
+	<Entry>
+	  <Instance>DN E2 High High - - </Instance><!-- PredCompG -->
+	  <ProbTable>
+	    1.0  0.0  0.0
+	    0.9  0.1  0.0
+	    0.0  0.9  0.1
+	  </ProbTable>
+	</Entry>
+	<!-- Fire Grazing -->
+	<Entry>
+	  <Instance>FG E1 * * - - </Instance><!-- FGGouldianTM -->
+	  <ProbTable>
+	    0.2  0.8  0.0
+	    0.05 0.15 0.8
+	    0.0  0.05 0.95
+	  </ProbTable>
+	</Entry>
+	<Entry>
+	  <Instance>FG E2 Low * - - </Instance><!-- NoPredG -->
+	  <ProbTable>
+	    0.4  0.6  0.0
+	    0.1  0.3  0.6
+	    0.0  0.05 0.95
+	  </ProbTable>
+	</Entry>
+	<Entry>
+	  <Instance>FG E2 Medium * - - </Instance><!-- NoCompetG -->
+	  <ProbTable>
+	    0.4  0.6  0.0
+	    0.1  0.3  0.6
+	    0.0  0.1  0.9
+	  </ProbTable>
+	</Entry>
+	<Entry>
+	  <Instance>FG E2 High * - - </Instance><!-- NoCompetG -->
+	  <ProbTable>
+	    0.4  0.6  0.0
+	    0.1  0.3  0.6
+	    0.0  0.1  0.9
+	  </ProbTable>
+	</Entry>
+	<!-- Cats -->
+	<Entry>
+	  <Instance>C E1 Low * - - </Instance><!-- NoPredGTM -->
+	  <ProbTable>
+	    0.4  0.6  0.0
+	    0.05 0.35 0.6
+	    0.0  0.05 0.95
+	  </ProbTable>
+	</Entry>
+	<Entry>
+	  <Instance>C E1 Medium Low - - </Instance><!-- NoCompetGTM -->
+	  <ProbTable>
+	    0.5  0.5  0.0
+	    0.0  0.5  0.5
+	    0.0  0.0  1.0
+	  </ProbTable>
+	</Entry>
+	<Entry>
+	  <Instance>C E1 Medium Medium - - </Instance><!-- PredCompGTM -->
+	  <ProbTable>
+	    1.0  0.0  0.0
+	    0.9  0.1  0.0
+	    0.0  0.9  0.1
+	  </ProbTable>
+	</Entry>
+	<Entry>
+	  <Instance>C E1 Medium High - - </Instance><!-- PredCompGTM -->
+	  <ProbTable>
+	    1.0  0.0  0.0
+	    0.9  0.1  0.0
+	    0.0  0.9  0.1
+	  </ProbTable>
+	</Entry>
+	<Entry>
+	  <Instance>C E1 High Low - - </Instance><!-- NoCompetGTM -->
+	  <ProbTable>
+	    0.5  0.5  0.0
+	    0.0  0.5  0.5
+	    0.0  0.0  1.0
+	  </ProbTable>
+	</Entry>
+	<Entry>
+	  <Instance>C E1 High Medium - - </Instance><!-- PredCompGTM -->
+	  <ProbTable>
+	    1.0  0.0  0.0
+	    0.9  0.1  0.0
+	    0.0  0.9  0.1
+	  </ProbTable>
+	</Entry>
+	<Entry>
+	  <Instance>C E1 High High - - </Instance><!-- PredCompGTM -->
+	  <ProbTable>
+	    1.0  0.0  0.0
+	    0.9  0.1  0.0
+	    0.0  0.9  0.1
+	  </ProbTable>
+	</Entry>
+	<Entry>
+	  <Instance>C E2 Low * - - </Instance><!-- NoPredG -->
+	  <ProbTable>
+	    0.4  0.6  0.0
+	    0.1  0.3  0.6
+	    0.0  0.05 0.95
+	  </ProbTable>
+	</Entry>
+	<Entry>
+	  <Instance>C E2 Medium Low - - </Instance><!-- NoCompetG -->
+	  <ProbTable>
+	    0.4  0.6  0.0
+	    0.1  0.3  0.6
+	    0.0  0.1  0.9
+	  </ProbTable>
+	</Entry>
+	<Entry>
+	  <Instance>C E2 Medium Medium - - </Instance><!-- PredCompG -->
+	  <ProbTable>
+	    1.0  0.0  0.0
+	    0.9  0.1  0.0
+	    0.0  0.9  0.1
+	  </ProbTable>
+	</Entry>
+	<Entry>
+	  <Instance>C E2 Medium High - - </Instance><!-- PredCompG -->
+	  <ProbTable>
+	    1.0  0.0  0.0
+	    0.9  0.1  0.0
+	    0.0  0.9  0.1
+	  </ProbTable>
+	</Entry>
+	<Entry>
+	  <Instance>C E2 High Low - - </Instance><!-- NoCompetG -->
+	  <ProbTable>
+	    0.4  0.6  0.0
+	    0.1  0.3  0.6
+	    0.0  0.1  0.9
+	  </ProbTable>
+	</Entry>
+	<Entry>
+	  <Instance>C E2 High Medium - - </Instance><!-- PredCompG -->
+	  <ProbTable>
+	    1.0  0.0  0.0
+	    0.9  0.1  0.0
+	    0.0  0.9  0.1
+	  </ProbTable>
+	</Entry>
+	<Entry>
+	  <Instance>C E2 High High - - </Instance><!-- PredCompG -->
+	  <ProbTable>
+	    1.0  0.0  0.0
+	    0.9  0.1  0.0
+	    0.0  0.9  0.1
+	  </ProbTable>
+	</Entry>
+	<!-- NB -->
+	<Entry>
+	  <Instance>NB E1 Low * - - </Instance><!-- NoPredGTM -->
+	  <ProbTable>
+	    0.4  0.6  0.0
+	    0.05 0.35 0.6
+	    0.0  0.05 0.95
+	  </ProbTable>
+	</Entry>
+	<Entry>
+	  <Instance>NB E1 Medium * - - </Instance><!-- NoCompetGTM -->
+	  <ProbTable>
+	    0.5  0.5  0.0
+	    0.0  0.5  0.5
+	    0.0  0.0  1.0
+	  </ProbTable>
+	</Entry>
+	<Entry>
+	  <Instance>NB E1 High * - - </Instance><!-- NoCompetGTM -->
+	  <ProbTable>
+	    0.5  0.5  0.0
+	    0.0  0.5  0.5
+	    0.0  0.0  1.0
+	  </ProbTable>
+	</Entry>
+	<Entry>
+	  <Instance>NB E2 Low * - - </Instance><!-- NoPredG -->
+	  <ProbTable>
+	    0.4  0.6  0.0
+	    0.1  0.3  0.6
+	    0.0  0.05 0.95
+	  </ProbTable>
+	</Entry>
+	<Entry>
+	  <Instance>NB E2 Medium * - - </Instance><!-- NoCompetG -->
+	  <ProbTable>
+	    0.4  0.6  0.0
+	    0.1  0.3  0.6
+	    0.0  0.1  0.9
+	  </ProbTable>
+	</Entry>
+	<Entry>
+	  <Instance>NB E2 High * - - </Instance><!-- NoCompetG -->
+	  <ProbTable>
+	    0.4  0.6  0.0
+	    0.1  0.3  0.6
+	    0.0  0.1  0.9
+	  </ProbTable>
+	</Entry>
+      </Parameter>
+    </CondProb>
+    <CondProb>
+      <!-- Expert -->
+      <Var>Expert_1</Var><Parent>Expert_0</Parent>
+      <Parameter type = "TBL">
+	<Entry>
+	  <Instance> - - </Instance>
+	  <ProbTable>
+	    1 0
+	    0 1
+	  </ProbTable>
+	</Entry>
+      </Parameter>
+    </CondProb>
+  </StateTransitionFunction>
+
+
+  <ObsFunction>
+    <CondProb>
+      <Var>oGouldian</Var>
+      <Parent>Gouldian_1</Parent>
+      <Parameter type = "TBL">
+	<Entry>
+	  <Instance>- -</Instance>
+	  <ProbTable>
+	    1 0 0
+	    0 1 0
+	    0 0 1
+	  </ProbTable>
+	</Entry>
+      </Parameter>
+    </CondProb>
+    <CondProb>
+      <Var>oLT</Var>
+      <Parent>LT_1</Parent>
+      <Parameter type = "TBL">
+	<Entry>
+	  <Instance>- -</Instance>
+	  <ProbTable>
+	    1 0 0
+	    0 1 0
+	    0 0 1
+	  </ProbTable>
+	</Entry>
+      </Parameter>
+    </CondProb>
+    <CondProb>
+      <Var>oDingo</Var>
+      <Parent>Dingo_1</Parent>
+      <Parameter type = "TBL">
+	<Entry>
+	  <Instance>- -</Instance>
+	  <ProbTable>
+	    1 0 0
+	    0 1 0
+	    0 0 1
+	  </ProbTable>
+	</Entry>
+      </Parameter>
+    </CondProb>
+    <CondProb>
+      <Var>oCats</Var>
+      <Parent>Cats_1</Parent>
+      <Parameter type = "TBL">
+	<Entry>
+	  <Instance>- -</Instance>
+	  <ProbTable>
+	    1 0 0
+	    0 1 0
+	    0 0 1
+	  </ProbTable>
+	</Entry>
+      </Parameter>
+    </CondProb>
+  </ObsFunction>
+
+  <RewardFunction>
+    <Func>
+      <Var>Reward</Var>
+      <Parent>Action Gouldian_0</Parent>
+      <Parameter type = "TBL">
+	<Entry>
+	  <Instance>DN - </Instance>
+	  <ValueTable>0 +10 +20</ValueTable>
+	</Entry>
+	<Entry>
+	  <Instance>FG - </Instance>
+	  <ValueTable>-20 -10 0</ValueTable>
+	</Entry>
+	<Entry>
+	  <Instance>C - </Instance>
+	  <ValueTable>-20 -10 0</ValueTable>
+	</Entry>
+	<Entry>
+	  <Instance>NB - </Instance>
+	  <ValueTable>-20 -10 0</ValueTable>
+	</Entry>
+      </Parameter>
+    </Func>
+  </RewardFunction>
+</pomdpx>

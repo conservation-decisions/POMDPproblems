@@ -1,0 +1,64 @@
+## Problem inspired by Regan, T.J., Chadès, I. & Possingham, H.P. (2011) 
+## Optimally managing under imperfect detection: a method for plant invasions. Journal of Applied Ecology, 48, 76-85.
+## iadine.chades@csiro.au
+##
+## change discount factor to 1 for finite horizon problems.
+
+discount: 0.95 	
+values: reward
+states: empty seeds adults
+actions: PCrop Fum HostD   
+observations: absent present
+## start: 0 0 1
+
+## Detection probabilities
+O: * 
+1 0
+1 0
+0.3000000000 0.7000000000
+
+## Transition probabilities
+T: * : empty
+1.0000000000 0.0000000000 0.0000000000
+
+T: PCrop : seeds
+0.0800000000 0.5704000000 0.3496000000
+
+T: PCrop : adults
+0.0000000000 0.6200000000 0.3800000000
+
+T: Fum : seeds
+0.0000000000 1.0000000000 0.0000000000
+
+T: Fum : adults
+0.2330827068 0.4754887218 0.2914285714 
+
+T: HostD : seeds
+0.0800000000 0.7452000000 0.1748000000 
+
+T: HostD : adults
+0.0000000000 0.8100000000 0.1900000000 
+
+
+## Reward
+R: PCrop:  empty : * :*	   1798.00
+R: PCrop : seeds : *: *	     -2.00
+R: PCrop : adults : *: *	 -2.00
+R: Fum : empty : *: *	   1782.00
+R: Fum : seeds : *: *	-1000018.00
+R: Fum : adults : *: *	    -18.00
+R: HostD : empty : *: *	   1796.00
+R: HostD : seeds : *: *	    146.00
+R: HostD : adults : *: *	 -4.00
+
+
+## Reward (normalised) - updated by ic
+## R: PCrop:  empty : * :*	   1.0
+## R: PCrop : seeds : *: *	     0.9982 
+## R: PCrop : adults : *: *	     0.9982 
+## R: Fum : empty : *: *	   0.9999
+## R: Fum : seeds : *: *	0
+## R: Fum : adults : *: *	    0.9998
+## R: HostD : empty : *: *	   1.0
+## R: HostD : seeds : *: *	    0.9984
+## R: HostD : adults : *: *	     0.9980
