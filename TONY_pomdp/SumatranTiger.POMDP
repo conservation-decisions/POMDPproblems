@@ -1,0 +1,36 @@
+# POMDP File: Tiger Problem
+# Produced with R package pomdp
+
+discount: 0.95
+values: reward
+states: extant extinct
+actions: manage survey stop
+observations: present absent
+start: 1.0000000 0.0000000
+
+T: manage
+0.9418400 0.0581600
+0.0000000 1.0000000
+T: survey
+0.9000000 0.1000000
+0.0000000 1.0000000
+T: stop
+0.9000000 0.1000000
+0.0000000 1.0000000
+
+O: manage
+0.0100000 0.9900000
+0.0000000 1.0000000
+O: survey
+0.7819300 0.2180700
+0.0000000 1.0000000
+O: stop
+0.0100000 0.9900000
+0.0000000 1.0000000
+
+R: manage : extant : * : * 156.3490000
+R: manage : extinct : * : * -18.7840000
+R: survey : extant : * : * 164.2930000
+R: survey : extinct : * : * -10.8400000
+R: stop : extant : * : * 175.1330000
+R: stop : extinct : * : * 0.0000000
