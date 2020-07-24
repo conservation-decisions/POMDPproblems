@@ -1,5 +1,7 @@
-# POMDP File: Tiger Problem
-# Produced with R package pomdp
+# POMDP File: Sumatran Tiger Problem
+# inpired by Chades et al (2008, PNAS)
+# Created with R package pomdp by Luz Pascal
+
 
 discount: 0.95
 values: reward
