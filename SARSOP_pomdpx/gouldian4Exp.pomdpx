@@ -9,7 +9,7 @@
 
 <pomdpx version='0.1' id='4experts' xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance' xsi:noNamespaceSchemaLocation='pomdpx.xsd'>
   
-  <Description>This is a handmade POMDPX file (by Olivier Buffet,
+  <Description>Fixed by IC 26/08/2020 - This is a handmade POMDPX file (by Olivier Buffet,
     after a POMDP file by Iadine Chadès)</Description>
   <Discount>0.900000</Discount>
 
