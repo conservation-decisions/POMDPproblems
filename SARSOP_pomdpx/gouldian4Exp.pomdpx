@@ -82,74 +82,74 @@
 	<!-- action FG -->
 	<Entry>
 	  <Instance>FG Low M1 Low</Instance>
-	  <ProbTable>0.9</ProbTable>
+	  <ProbTable>0.2</ProbTable>
 	</Entry>
 	<Entry>
 	  <Instance>FG Low M1 High</Instance>
-	  <ProbTable>0.1</ProbTable>
+	  <ProbTable>0.8</ProbTable>
 	</Entry>
 	<Entry>
 	  <Instance>FG High M1 Low</Instance>
-	  <ProbTable>0.4</ProbTable>
+	  <ProbTable>0.05</ProbTable>
 	</Entry>
 	<Entry>
 	  <Instance>FG High M1 High</Instance>
-	  <ProbTable>0.6</ProbTable>
+	  <ProbTable>0.95</ProbTable>
 	</Entry>
 
 	<!-- action C -->
 	<Entry>
 	  <Instance>C Low M1 Low</Instance>
-	  <ProbTable>0.8</ProbTable>
+	  <ProbTable>0.4</ProbTable>
 	</Entry>
 	<Entry>
 	  <Instance>C Low M1 High</Instance>
-	  <ProbTable>0.2</ProbTable>
+	  <ProbTable>0.6</ProbTable>
 	</Entry>
 	<Entry>
 	  <Instance>C High M1 Low</Instance>
-	  <ProbTable>0.5</ProbTable>
+	  <ProbTable>0.4</ProbTable>
 	</Entry>
 	<Entry>
 	  <Instance>C High M1 High</Instance>
-	  <ProbTable>0.5</ProbTable>
+	  <ProbTable>0.6</ProbTable>
 	</Entry>
 
 	<!-- action N -->
 	<Entry>
 	  <Instance>N Low M1 Low</Instance>
-	  <ProbTable>0.655172</ProbTable>
+	  <ProbTable>0.6</ProbTable>
 	</Entry>
 	<Entry>
 	  <Instance>N Low M1 High</Instance>
-	  <ProbTable>0.344828</ProbTable>
+	  <ProbTable>0.4</ProbTable>
 	</Entry>
 	<Entry>
 	  <Instance>N High M1 Low</Instance>
-	  <ProbTable>0.5</ProbTable>
+	  <ProbTable>0.4</ProbTable>
 	</Entry>
 	<Entry>
 	  <Instance>N High M1 High</Instance>
-	  <ProbTable>0.5</ProbTable>
+	  <ProbTable>0.6</ProbTable>
 	</Entry>
 
 	<!-- model M2 -->
 	<!-- action DN -->
 	<Entry>
 	  <Instance>DN Low M2 Low</Instance>
-	  <ProbTable>0.2</ProbTable>
+	  <ProbTable>0.9</ProbTable>
 	</Entry>
 	<Entry>
 	  <Instance>DN Low M2 High</Instance>
-	  <ProbTable>0.8</ProbTable>
+	  <ProbTable>0.1</ProbTable>
 	</Entry>
 	<Entry>
 	  <Instance>DN High M2 Low</Instance>
-	  <ProbTable>0.05</ProbTable>
+	  <ProbTable>0.4</ProbTable>
 	</Entry>
 	<Entry>
 	  <Instance>DN High M2 High</Instance>
-	  <ProbTable>0.95</ProbTable>
+	  <ProbTable>0.6</ProbTable>
 	</Entry>
 
 	<!-- action FG -->
@@ -173,74 +173,74 @@
 	<!-- action C -->
 	<Entry>
 	  <Instance>C Low M2 Low</Instance>
-	  <ProbTable>0.7</ProbTable>
+	  <ProbTable>0.2</ProbTable>
 	</Entry>
 	<Entry>
 	  <Instance>C Low M2 High</Instance>
-	  <ProbTable>0.3</ProbTable>
+	  <ProbTable>0.8</ProbTable>
 	</Entry>
 	<Entry>
 	  <Instance>C High M2 Low</Instance>
-	  <ProbTable>0.6</ProbTable>
+	  <ProbTable>0.1</ProbTable>
 	</Entry>
 	<Entry>
 	  <Instance>C High M2 High</Instance>
-	  <ProbTable>0.4</ProbTable>
+	  <ProbTable>0.9</ProbTable>
 	</Entry>
 
 	<!-- action N -->
 	<Entry>
 	  <Instance>N Low M2 Low</Instance>
-	  <ProbTable>0.3</ProbTable>
+	  <ProbTable>0.4</ProbTable>
 	</Entry>
 	<Entry>
 	  <Instance>N Low M2 High</Instance>
-	  <ProbTable>0.7</ProbTable>
+	  <ProbTable>0.6</ProbTable>
 	</Entry>
 	<Entry>
 	  <Instance>N High M2 Low</Instance>
-	  <ProbTable>0.1</ProbTable>
+	  <ProbTable>0.25</ProbTable>
 	</Entry>
 	<Entry>
 	  <Instance>N High M2 High</Instance>
-	  <ProbTable>0.9</ProbTable>
+	  <ProbTable>0.75</ProbTable>
 	</Entry>
 
 	<!-- model M3 -->
 	<!-- action DN -->
 	<Entry>
 	  <Instance>DN Low M3 Low</Instance>
-	  <ProbTable>0.4</ProbTable>
+	  <ProbTable>0.8</ProbTable>
 	</Entry>
 	<Entry>
 	  <Instance>DN Low M3 High</Instance>
-	  <ProbTable>0.6</ProbTable>
+	  <ProbTable>0.2</ProbTable>
 	</Entry>
 	<Entry>
 	  <Instance>DN High M3 Low</Instance>
-	  <ProbTable>0.4</ProbTable>
+	  <ProbTable>0.5</ProbTable>
 	</Entry>
 	<Entry>
 	  <Instance>DN High M3 High</Instance>
-	  <ProbTable>0.6</ProbTable>
+	  <ProbTable>0.5</ProbTable>
 	</Entry>
 
 	<!-- action FG -->
 	<Entry>
 	  <Instance>FG Low M3 Low</Instance>
-	  <ProbTable>0.2</ProbTable>
+	  <ProbTable>0.7</ProbTable>
 	</Entry>
 	<Entry>
 	  <Instance>FG Low M3 High</Instance>
-	  <ProbTable>0.8</ProbTable>
+	  <ProbTable>0.3</ProbTable>
 	</Entry>
 	<Entry>
 	  <Instance>FG High M3 Low</Instance>
-	  <ProbTable>0.1</ProbTable>
+	  <ProbTable>0.6</ProbTable>
 	</Entry>
 	<Entry>
 	  <Instance>FG High M3 High</Instance>
-	  <ProbTable>0.9</ProbTable>
+	  <ProbTable>0.4</ProbTable>
 	</Entry>
 
 	<!-- action C -->
@@ -272,48 +272,48 @@
 	</Entry>
 	<Entry>
 	  <Instance>N High M3 Low</Instance>
-	  <ProbTable>0.3</ProbTable>
+	  <ProbTable>0.2</ProbTable>
 	</Entry>
 	<Entry>
 	  <Instance>N High M3 High</Instance>
-	  <ProbTable>0.7</ProbTable>
+	  <ProbTable>0.8</ProbTable>
 	</Entry>
 
 	<!-- model M4 -->
 	<!-- action DN -->
 	<Entry>
 	  <Instance>DN Low M4 Low</Instance>
-	  <ProbTable>0.6</ProbTable>
+	  <ProbTable>0.95</ProbTable>
 	</Entry>
 	<Entry>
 	  <Instance>DN Low M4 High</Instance>
-	  <ProbTable>0.4</ProbTable>
+	  <ProbTable>0.05</ProbTable>
 	</Entry>
 	<Entry>
 	  <Instance>DN High M4 Low</Instance>
-	  <ProbTable>0.4</ProbTable>
+	  <ProbTable>0.5</ProbTable>
 	</Entry>
 	<Entry>
 	  <Instance>DN High M4 High</Instance>
-	  <ProbTable>0.6</ProbTable>
+	  <ProbTable>0.5</ProbTable>
 	</Entry>
 
 	<!-- action FG -->
 	<Entry>
 	  <Instance>FG Low M4 Low</Instance>
-	  <ProbTable>0.4</ProbTable>
+	  <ProbTable>0.3</ProbTable>
 	</Entry>
 	<Entry>
 	  <Instance>FG Low M4 High</Instance>
-	  <ProbTable>0.6</ProbTable>
+	  <ProbTable>0.7</ProbTable>
 	</Entry>
 	<Entry>
 	  <Instance>FG High M4 Low</Instance>
-	  <ProbTable>0.25</ProbTable>
+	  <ProbTable>0.1</ProbTable>
 	</Entry>
 	<Entry>
 	  <Instance>FG High M4 High</Instance>
-	  <ProbTable>0.75</ProbTable>
+	  <ProbTable>0.9</ProbTable>
 	</Entry>
 
 	<!-- action C -->
@@ -327,11 +327,11 @@
 	</Entry>
 	<Entry>
 	  <Instance>C High M4 Low</Instance>
-	  <ProbTable>0.2</ProbTable>
+	  <ProbTable>0.3</ProbTable>
 	</Entry>
 	<Entry>
 	  <Instance>C High M4 High</Instance>
-	  <ProbTable>0.8</ProbTable>
+	  <ProbTable>0.7</ProbTable>
 	</Entry>
 
 	<!-- action N -->
