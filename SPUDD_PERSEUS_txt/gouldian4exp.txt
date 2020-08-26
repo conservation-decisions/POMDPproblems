@@ -29,7 +29,7 @@ action DoNothing
                                     (High   (Bird'  (Low    (0.5))
                                                     (High   (0.5))))))
                     (Exp4  (Bird   (Low    (Bird'  (Low    (0.95))
-                                                    (High   (0.5))))
+                                                    (High   (0.05))))
                                     (High   (Bird'  (Low    (0.5))
                                                     (High   (0.5)))))))
     Expert (SAMEExpert)
