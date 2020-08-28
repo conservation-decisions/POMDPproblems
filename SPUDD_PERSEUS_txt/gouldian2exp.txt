@@ -1,0 +1,390 @@
+// gouldian finch and interacting species
+// fixed by IC 28/08/2020
+// Iadine Chades 
+// iadine.chades@csiro.au
+// feb 2011
+
+
+/// DECLARATION
+(variables
+    (Gouldian 	Low Medium High)
+    (LT 		Low Medium High)  
+    (Dingo		Low Medium High)
+    (Cats		Low Medium High)
+    (Expert 	Exp1 Exp2)
+)
+(observations
+    (OGouldian	oLow oMedium oHigh)
+    (OLT		oLow oMedium oHigh)
+    (ODingo		oLow oMedium oHigh)
+    (OCats		oLow oMedium oHigh)
+)
+
+init [* (Gouldian (Low (1.0)) (Medium (0.0)) (High (0.0)))
+        (LT	  (Low (0.0)) (Medium (1.0)) (High (0.0)))
+        (Dingo	  (Low (1.0)) (Medium (0.0)) (High (0.0)))
+        (Cats	  (Low (0.0)) (Medium (1.0)) (High (0.0)))
+		(Expert (Exp1 (0.5)) (Exp2 (0.5)))]
+
+unnormalised
+
+///--------------------------------------------------------------------------------------
+
+// ********************
+// DN Expert 1 = Exp1
+
+//--- DINGO
+dd DNdingoTM
+	(Dingo	(Low	(Dingo'	(Low	(0.98)) (Medium	(0.02)) (High	(0.0))))
+			(Medium (Dingo'	(Low	(0.6)) 	(Medium	(0.38)) (High	(0.02))))
+			(High	(Dingo'	(Low	(0.0)) 	(Medium	(0.6)) 	(High	(0.4)))))
+enddd	//ok
+
+dd FGdingoTM
+	(Dingo	(Low	(Dingo'	(Low	(0.9)) 	(Medium	(0.1))	(High	(0.0))))
+			(Medium (Dingo'	(Low	(0.05))	(Medium	(0.85))	(High	(0.1))))
+			(High	(Dingo'	(Low	(0.0))	(Medium	(0.05))	(High	(0.95)))))
+enddd	//ok
+
+dd CdingoTM
+	(Dingo	(Low	(Dingo'	(Low	(0.22))	(Medium	(0.78))	(High	(0.0))))
+			(Medium (Dingo'	(Low	(0.02))	(Medium	(0.2))	(High	(0.78))))
+			(High	(Dingo'	(Low	(0.0))	(Medium	(0.02))	(High	(0.98)))))
+enddd	//ok
+//----- END DINGO toutes actions Exp1
+
+
+//----- CAT
+dd NoPredcatsTM
+	(Cats 	(Low	(Cats'	(Low	(0.05))	(Medium	(0.95))	(High (0.0))))
+			(Medium	(Cats'	(Low	(0.0))	(Medium	(0.05))	(High (0.95))))
+			(High	(Cats'	(Low	(0.0))	(Medium	(0.0))	(High (1.0)))))
+enddd
+dd PredcatsTM
+	(Cats 	(Low	(Cats'	(Low	(0.05))	(Medium	(0.95))	(High (0.0))))		//check ISSUE
+			(Medium	(Cats'	(Low	(0.88))	(Medium	(0.10))	(High (0.02))))
+			(High	(Cats'	(Low	(0.0))	(Medium	(0.88))	(High (0.12)))))
+enddd
+dd DNcatsTM
+	(Dingo 	(Low	(NoPredcatsTM))
+			(Medium (PredcatsTM))
+			(High   (PredcatsTM)))
+enddd
+
+dd NoPredcatsTMFG
+	(Cats 	(Low	(Cats'	(Low	(0.95))	(Medium	(0.05))	(High (0.0))))
+			(Medium	(Cats'	(Low	(0.20))	(Medium	(0.75))	(High (0.05))))
+			(High	(Cats'	(Low	(0.0))	(Medium	(0.2))	(High (0.8)))))
+enddd
+dd PredcatsTMFG
+	(Cats 	(Low	(Cats'	(Low	(0.95))	(Medium	(0.05))	(High (0.0))))		// using 1st line NoPredFG to avoid up and down
+			(Medium	(Cats'	(Low	(0.88))	(Medium	(0.10))	(High (0.02))))
+			(High	(Cats'	(Low	(0.0))	(Medium	(0.88))	(High (0.12)))))
+enddd
+dd FGcatsTM
+	(Dingo	(Low	(NoPredcatsTMFG))
+			(Medium (PredcatsTMFG)) 
+			(High	(PredcatsTMFG)))
+enddd
+// --- End Cat toutes actions
+// --- long tailed finches
+dd NoPredLTTM
+	(LT		(Low	(LT'	(Low 	(0.4)) 	(Medium	(0.6))	(High	(0.0))))
+			(Medium	(LT'	(Low	(0.0)) 	(Medium	(0.4))	(High	(0.6))))
+			(High	(LT'	(Low 	(0.0))	(Medium	(0.0))	(High	(1.0)))))
+enddd
+dd PredLTTM
+	(LT		(Low	(LT'	(Low 	(0.975)) 	(Medium	(0.025))	(High	(0.0))))
+			(Medium	(LT'	(Low	(0.075)) 	(Medium	(0.90))	 (High	(0.025))))
+			(High	(LT'	(Low 	(0.0))		(Medium	(0.075))	(High	(0.925)))))
+enddd
+dd DNLTTM
+	(Cats	(Low	(NoPredLTTM))
+			(Medium	(PredLTTM))
+			(High	(PredLTTM)))
+enddd
+
+dd FGLTTM	// independent of cats for TM
+	(LT		(Low	(LT'	(Low 	(0.15)) (Medium	(0.8))	(High	(0.0))))
+			(Medium	(LT'	(Low	(0.05)) (Medium	(0.15))	(High	(0.8))))
+			(High	(LT'	(Low 	(0.0))	(Medium	(0.05))	(High	(0.95)))))
+enddd
+
+//---- Gouldian finches
+dd NoPredGTM
+	(Gouldian	(Low	(Gouldian'	(Low	(0.4)) (Medium	(0.6))	(High	(0.0))))
+				(Medium	(Gouldian'	(Low	(0.05)) (Medium	(0.35))	(High	(0.55))))
+				(High	(Gouldian'	(Low	(0.0)) (Medium	(0.05))	(High	(0.95)))))
+enddd
+dd NoCompetGTM	// no competition from LT
+	(Gouldian	(Low	(Gouldian'	(Low	(0.5)) (Medium	(0.5)) (High	(0.0))))
+				(Medium (Gouldian'	(Low	(0.0)) (Medium	(0.5)) (High	(0.5))))
+				(High	(Gouldian'	(Low	(0.0)) (Medium	(0.0)) (High	(1.0)))))
+enddd
+dd PredCompGTM // competition from LT
+	(Gouldian	(Low	(Gouldian'	(Low	(1.0)) (Medium	(0.0)) (High (0.0))))
+				(Medium (Gouldian'	(Low	(0.9)) (Medium	(0.1)) (High (0.0))))
+				(High	(Gouldian'	(Low	(0.0)) (Medium	(0.9)) (High (0.1)))))
+enddd
+dd DNGouldianTM
+	(Cats	(Low	(NoPredGTM))
+			(Medium (LT		(Low (NoCompetGTM))	(Medium (PredCompGTM))	(High (PredCompGTM))))
+			(High	(LT		(Low (NoCompetGTM))	(Medium (PredCompGTM))	(High (PredCompGTM)))))
+enddd
+
+dd NBGouldianTM	// nesting box => no competition
+	(Cats	(Low		(NoPredGTM))
+			(Medium		(NoCompetGTM))
+			(High		(NoCompetGTM)))
+enddd
+
+dd FGGouldianTM	// Fire and grazing => independent of cats and LT for TM
+	(Gouldian 	(Low	(Gouldian'	(Low	(0.20))	(Medium	(0.8))	(High	(0.0))))
+				(Medium	(Gouldian'	(Low	(0.05))	(Medium	(0.15))	(High	(0.8))))
+				(High	(Gouldian'	(Low	(0.0))	(Medium	(0.05))	(High	(0.95)))))
+enddd
+//-- end gouldian finches
+
+
+//-- %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+//-----   Expert Exp2
+
+//-- dingo
+dd DNdingoJC
+	(Dingo	(Low	(Dingo'	(Low	(1)) 	(Medium	(0.0)) (High	(0.0))))
+			(Medium (Dingo'	(Low	(0.6)) 	(Medium	(0.4)) (High	(0.0))))
+			(High	(Dingo'	(Low	(0.0)) 	(Medium	(0.6)) 	(High	(0.4)))))
+enddd
+dd CdingoJC
+	(Dingo	(Low	(Dingo'	(Low	(0.25)) (Medium	(0.75)) (High	(0.0))))
+			(Medium (Dingo'	(Low	(0.0)) 	(Medium	(0.25)) (High	(0.75))))
+			(High	(Dingo'	(Low	(0.0)) 	(Medium	(0.0)) 	(High	(1.0)))))
+enddd
+
+//--cats
+dd NoPredCats
+	(Cats	(Low		(Cats' 	(Low (0.35))	(Medium	(0.65)) (High	(0.0))))
+			(Medium		(Cats'	(Low (0.0))		(Medium	(0.35)) (High	(0.65))))
+			(High		(Cats'	(Low (0.0))		(Medium	(0.0)) (High	(1.0)))))
+enddd
+dd PredCats
+	(Cats	(Low		(Cats' 	(Low (0.35))	(Medium	(0.65)) (High	(0.0))))
+			(Medium		(Cats'	(Low (0.7))		(Medium	(0.3)) (High	(0.0))))
+			(High		(Cats'	(Low (0.0))		(Medium	(0.7)) (High	(0.3)))))
+enddd
+dd DNcatsJC
+	(Dingo	(Low	(NoPredCats))
+			(Medium	(PredCats))
+			(High	(PredCats)))
+enddd
+dd PredCatsFG
+	(Cats	(Low		(Cats' 	(Low (0.85))	(Medium	(0.15)) (High	(0.0)))) // cats low=> dingo ineffective take FG values
+			(Medium		(Cats'	(Low (0.7))		(Medium	(0.3)) (High	(0.0))))
+			(High		(Cats'	(Low (0.0))		(Medium	(0.7)) (High	(0.3)))))
+enddd
+	// ISSUE: FG does a better job than Cats management ?
+dd NoPredCatsFG
+	(Cats	(Low		(Cats' 	(Low (0.85))	(Medium	(0.15)) (High	(0.0))))
+			(Medium		(Cats'	(Low (0.2))		(Medium	(0.65)) (High	(0.15))))
+			(High		(Cats'	(Low (0.0))		(Medium	(0.2)) 	(High	(0.8)))))
+enddd
+dd FGcatsJC
+	(Dingo	(Low	(NoPredCatsFG))
+			(Medium	(PredCatsFG))
+			(High	(PredCatsFG)))
+enddd
+
+//-- LT
+dd NoPredLT
+	(LT		(Low	(LT'	(Low 	(0.35)) (Medium	(0.65))	(High	(0.0))))
+			(Medium	(LT'	(Low	(0.0)) 	(Medium	(0.35))	(High	(0.65))))
+			(High	(LT'	(Low 	(0.0))	(Medium	(0.0))	(High	(1.0)))))
+enddd
+
+dd PredLT
+	(LT		(Low	(LT'	(Low 	(0.95)) (Medium	(0.05))	(High	(0.0))))
+			(Medium	(LT'	(Low	(0.5)) 	(Medium	(0.45))	(High	(0.05))))
+			(High	(LT'	(Low 	(0.0))	(Medium	(0.5))	(High	(0.5)))))
+enddd
+
+dd PredLTFG
+	(LT		(Low	(LT'	(Low 	(0.5)) 	(Medium	(0.5))	(High	(0.0))))
+			(Medium	(LT'	(Low	(0.2)) 	(Medium	(0.3))	(High	(0.5))))
+			(High	(LT'	(Low 	(0.0))	(Medium	(0.2))	(High	(0.8)))))
+enddd
+
+dd DNLTJC
+	(Cats	(Low	(NoPredLT))
+			(Medium	(PredLT))
+			(High	(PredLT)))
+enddd
+
+dd FGLTJC
+	(Cats	(Low	(NoPredLT))
+			(Medium	(PredLTFG))
+			(High	(PredLTFG)))
+enddd
+
+//-- Gouldian
+dd NoPredG
+	(Gouldian	(Low	(Gouldian'	(Low	(0.35))	(Medium	(0.75))	(High	(0.0))))
+				(Medium	(Gouldian'	(Low	(0.05))	(Medium	(0.2))	(High	(0.75))))
+				(High	(Gouldian'	(Low	(0.0))	(Medium	(0.05))	(High	(0.95)))))
+enddd
+
+dd NoCompetG
+	(Gouldian	(Low	(Gouldian'	(Low	(0.4))	(Medium	(0.60))	(High	(0.0))))
+				(Medium	(Gouldian'	(Low	(0.1))	(Medium	(0.30))	(High	(0.6))))
+				(High	(Gouldian'	(Low	(0.0))	(Medium	(0.1))	(High	(0.9)))))
+enddd
+
+dd PredCompG
+	(Gouldian	(Low	(Gouldian'	(Low	(1.0))	(Medium	(0.0))	(High	(0.0))))
+				(Medium	(Gouldian'	(Low	(0.9))	(Medium	(0.1))	(High	(0.0))))
+				(High	(Gouldian'	(Low	(0.0))	(Medium	(0.9))	(High	(0.1)))))
+enddd
+
+dd FGPredCompG
+	(Gouldian	(Low	(Gouldian'	(Low	(0.45))	(Medium	(0.55))	(High	(0.0))))
+				(Medium	(Gouldian'	(Low	(0.15))	(Medium	(0.30))	(High	(0.55))))
+				(High	(Gouldian'	(Low	(0.0))	(Medium	(0.15))	(High	(0.85)))))
+enddd
+
+dd DNGouldianJC
+	(Cats	(Low		(NoPredG))
+			(Medium		(LT		(Low	(NoCompetG))	(Medium	(PredCompG))	(High	(PredCompG))))
+			(High		(LT		(Low	(NoCompetG))	(Medium	(PredCompG))	(High	(PredCompG)))))
+enddd
+
+dd NBGouldianJC
+	(Cats	(Low		(NoPredG))
+			(Medium		(NoCompetG))
+			(High		(NoCompetG)))
+enddd
+
+dd FGGouldianJC
+	(Cats	(Low		(NoPredG))
+			(Medium		(LT		(Low	(NoCompetG))	(Medium	(FGPredCompG))	(High	(FGPredCompG))))
+			(High		(LT		(Low	(NoCompetG))	(Medium	(FGPredCompG))	(High	(FGPredCompG)))))
+enddd
+
+
+///-------------------------------------------------------------------------------------------------
+
+//action do nothing
+action DoNothing
+    Dingo (Expert'	(Exp1	(DNdingoTM))
+					(Exp2	(DNdingoJC)))
+	Cats  (Expert'	(Exp1	(DNcatsTM))
+					(Exp2  (DNcatsJC)))
+	LT	  (Expert'	(Exp1	(DNLTTM))
+					(Exp2	(DNLTJC)))
+    Gouldian (Expert'	(Exp1	(DNGouldianTM))
+						(Exp2	(DNGouldianJC)))
+	Expert (SAMEExpert)
+    observe
+        OGouldian 	(Gouldian' 	(Low 		(OGouldian' (oLow (1.0)) (oMedium (0.0)) 	(oHigh (0.0))))
+								(Medium 	(OGouldian' (oLow (1.0)) (oMedium (1.0)) 	(oHigh (0.0))))
+								(High 		(OGouldian' (oLow (0.0)) (oMedium (0.0)) 	(oHigh (1.0)))))
+		OLT 		(LT' 	(Low 	(OLT' (oLow (1.0)) (oMedium (0.0)) 	(oHigh (0.0))))
+							(Medium (OLT' (oLow (1.0)) (oMedium (1.0)) 	(oHigh (0.0))))
+							(High 	(OLT' (oLow (0.0)) (oMedium (0.0)) 	(oHigh (1.0)))))	
+		OCats 		(Cats' 	(Low 	(OCats' (oLow (1.0)) (oMedium (0.0)) 	(oHigh (0.0))))
+							(Medium (OCats' (oLow (1.0)) (oMedium (1.0)) 	(oHigh (0.0))))
+							(High 	(OCats' (oLow (0.0)) (oMedium (0.0)) 	(oHigh (1.0)))))
+		ODingo 		(Dingo' (Low 	(ODingo' (oLow (1.0)) (oMedium (0.0)) 	(oHigh (0.0))))
+							(Medium (ODingo' (oLow (1.0)) (oMedium (1.0)) 	(oHigh (0.0))))
+							(High 	(ODingo' (oLow (0.0)) (oMedium (0.0)) 	(oHigh (1.0)))))
+	endobserve
+    cost (0)
+endaction
+// action FireGrazing
+
+action FG
+   Dingo (Expert'	(Exp1	(DNdingoTM))
+					(Exp2	(DNdingoJC)))
+   Cats	(Expert'	(Exp1	(FGcatsTM))
+					(Exp2  (FGcatsJC)))
+	LT	(Expert'	(Exp1	(FGLTTM))
+					(Exp2	(FGLTJC)))
+    Gouldian (Expert'	(Exp1	(FGGouldianTM))
+						(Exp2	(FGGouldianJC)))
+	Expert (SAMEExpert)
+    observe
+        OGouldian 	(Gouldian' 	(Low 		(OGouldian' (oLow (1.0)) (oMedium (0.0)) 	(oHigh (0.0))))
+								(Medium 	(OGouldian' (oLow (1.0)) (oMedium (1.0)) 	(oHigh (0.0))))
+								(High 		(OGouldian' (oLow (0.0)) (oMedium (0.0)) 	(oHigh (1.0)))))
+		OLT 		(LT' 	(Low 	(OLT' (oLow (1.0)) (oMedium (0.0)) 	(oHigh (0.0))))
+							(Medium (OLT' (oLow (1.0)) (oMedium (1.0)) 	(oHigh (0.0))))
+							(High 	(OLT' (oLow (0.0)) (oMedium (0.0)) 	(oHigh (1.0)))))	
+		OCats 		(Cats' 	(Low 	(OCats' (oLow (1.0)) (oMedium (0.0)) 	(oHigh (0.0))))
+							(Medium (OCats' (oLow (1.0)) (oMedium (1.0)) 	(oHigh (0.0))))
+							(High 	(OCats' (oLow (0.0)) (oMedium (0.0)) 	(oHigh (1.0)))))
+		ODingo 		(Dingo' (Low 	(ODingo' (oLow (1.0)) (oMedium (0.0)) 	(oHigh (0.0))))
+							(Medium (ODingo' (oLow (1.0)) (oMedium (1.0)) 	(oHigh (0.0))))
+							(High 	(ODingo' (oLow (0.0)) (oMedium (0.0)) 	(oHigh (1.0)))))       
+	endobserve
+    cost (20)
+endaction
+	
+action C
+   Dingo (Expert'	(Exp1	(CdingoTM))
+					(Exp2	(CdingoJC)))
+   Cats	(Expert'	(Exp1	(DNcatsTM))
+					(Exp2  (DNcatsJC)))
+	LT	(Expert'	(Exp1	(DNLTTM))
+					(Exp2	(DNLTJC)))
+    Gouldian (Expert'	(Exp1	(DNGouldianTM))
+						(Exp2	(DNGouldianJC)))
+	Expert (SAMEExpert)
+
+    observe
+        OGouldian 	(Gouldian' 	(Low 		(OGouldian' (oLow (1.0)) (oMedium (0.0)) 	(oHigh (0.0))))
+								(Medium 	(OGouldian' (oLow (1.0)) (oMedium (1.0)) 	(oHigh (0.0))))
+								(High 		(OGouldian' (oLow (0.0)) (oMedium (0.0)) 	(oHigh (1.0)))))
+		OLT 		(LT' 	(Low 	(OLT' (oLow (1.0)) (oMedium (0.0)) 	(oHigh (0.0))))
+							(Medium (OLT' (oLow (1.0)) (oMedium (1.0)) 	(oHigh (0.0))))
+							(High 	(OLT' (oLow (0.0)) (oMedium (0.0)) 	(oHigh (1.0)))))	
+		OCats 		(Cats' 	(Low 	(OCats' (oLow (1.0)) (oMedium (0.0)) 	(oHigh (0.0))))
+							(Medium (OCats' (oLow (1.0)) (oMedium (1.0)) 	(oHigh (0.0))))
+							(High 	(OCats' (oLow (0.0)) (oMedium (0.0)) 	(oHigh (1.0)))))
+		ODingo 		(Dingo' (Low 	(ODingo' (oLow (1.0)) (oMedium (0.0)) 	(oHigh (0.0))))
+							(Medium (ODingo' (oLow (1.0)) (oMedium (1.0)) 	(oHigh (0.0))))
+							(High 	(ODingo' (oLow (0.0)) (oMedium (0.0)) 	(oHigh (1.0)))))
+    endobserve
+
+    cost (20)     
+endaction
+
+action NB
+   Dingo (Expert'	(Exp1	(DNdingoTM))
+					(Exp2	(DNdingoJC)))
+   Cats	(Expert'	(Exp1	(DNcatsTM))
+					(Exp2  (DNcatsJC)))
+	LT	(Expert'	(Exp1	(DNLTTM))
+					(Exp2	(DNLTJC)))
+    Gouldian (Expert'	(Exp1	(NBGouldianTM))
+						(Exp2	(NBGouldianJC)))
+	Expert (SAMEExpert)
+
+    observe
+		OGouldian 	(Gouldian' 	(Low 		(OGouldian' (oLow (1.0)) (oMedium (0.0)) 	(oHigh (0.0))))
+								(Medium 	(OGouldian' (oLow (1.0)) (oMedium (1.0)) 	(oHigh (0.0))))
+								(High 		(OGouldian' (oLow (0.0)) (oMedium (0.0)) 	(oHigh (1.0)))))
+		OLT 		(LT' 	(Low 	(OLT' (oLow (1.0)) (oMedium (0.0)) 	(oHigh (0.0))))
+							(Medium (OLT' (oLow (1.0)) (oMedium (1.0)) 	(oHigh (0.0))))
+							(High 	(OLT' (oLow (0.0)) (oMedium (0.0)) 	(oHigh (1.0)))))	
+		OCats 		(Cats' 	(Low 	(OCats' (oLow (1.0)) (oMedium (0.0)) 	(oHigh (0.0))))
+							(Medium (OCats' (oLow (1.0)) (oMedium (1.0)) 	(oHigh (0.0))))
+							(High 	(OCats' (oLow (0.0)) (oMedium (0.0)) 	(oHigh (1.0)))))
+		ODingo 		(Dingo' (Low 	(ODingo' (oLow (1.0)) (oMedium (0.0)) 	(oHigh (0.0))))
+							(Medium (ODingo' (oLow (1.0)) (oMedium (1.0)) 	(oHigh (0.0))))
+							(High 	(ODingo' (oLow (0.0)) (oMedium (0.0)) 	(oHigh (1.0)))))
+    endobserve
+    cost (20)      
+endaction
+
+reward (Gouldian (Low (0)) (Medium (10)) (High (20)))
+
+discount 0.9
+tolerance 0.01
