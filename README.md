@@ -19,6 +19,8 @@ The submission will be tested on one of the following solvers:
 - SARSOP https://github.com/AdaCompNUS/sarsop 
 
 If you are using this repository please cite: 
-Chades I., Pascal V., Fletcher C, Nicol S., Ferrer-Mestres J. A primer on Partially Observable Markov Decision Processes (POMDPs). CSIRO, 2020.
+ Chadès, I., Pascal, L. V., Nicol, S., Fletcher, C. S., & Ferrer-Mestres, J. (2021). A primer on partially observable Markov decision processes (POMDPs). Methods in Ecology and Evolution, 12, 2058– 2072. https://doi.org/10.1111/2041-210X.13692 
+ 
+ or see cite this repository on the right panel.
 
  
